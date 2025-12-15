@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - master
-      - main  # הוספתי גם main ליתר ביטחון
-  workflow_dispatch: # מאפשר להריץ ידנית בלחיצת כפתור
+      - main
+  workflow_dispatch:
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions: # נותן הרשאה מפורשת לכתוב לגיט
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -26,3 +28,19 @@ jobs:
           context: ./hello-k8s/my-web-server
           push: true
           tags: nogagol/my-k8s-app:v${{ github.run_number }}
+
+      # 👇👇👇 החלק החדש והקסום מתחיל כאן 👇👇👇
+      - name: Update values.yaml with new tag
+        run: |
+          cd hello-k8s
+          # מחליף את הגרסה הקיימת בגרסה החדשה (run_number)
+          sed -i 's/tag: .*/tag: "v${{ github.run_number }}"/' values.yaml
+          
+          # מגדיר את זהות ה"משתמש" שעושה את השינוי
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          
+          # שמירה ודחיפה
+          git add values.yaml
+          git commit -m "Auto-update image tag to v${{ github.run_number }}"
+          git push
