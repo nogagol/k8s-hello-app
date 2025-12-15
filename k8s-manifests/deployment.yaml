@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-k8s-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-k8s
+  template:
+    metadata:
+      labels:
+        app: hello-k8s
+    spec:
+      containers:
+      - name: hello-k8s
+        image: paulbouwer/hello-kubernetes:1.10
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        
+        # הזרקת משתנים (Env Vars)
+        env:
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: hello-k8s-config
+              key: APP_MESSAGE
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: hello-k8s-secret
+              key: API_KEY
+              
+        # בדיקות בריאות (Probes)
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5

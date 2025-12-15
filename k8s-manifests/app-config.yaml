@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-k8s-config
+  namespace: default
+data:
+  # זה המסר שהאפליקציה תציג. את יכולה לכתוב כאן מה שבא לך!
+  APP_MESSAGE: "Hello Noga! DevOps is starting to make sense."
+  APP_ENVIRONMENT: "Development"

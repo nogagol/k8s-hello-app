@@ -1,0 +1,31 @@
+name: CI Build and Push
+
+on:
+  push:
+    branches:
+      - master  # או main, תלוי איך קוראים לבראנץ' שלך
+    paths:
+      - 'hello-k8s/my-web-server/**' # ה-CI ירוץ רק אם נגענו בקוד של האפליקציה
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./hello-k8s/my-web-server # הנתיב לתיקייה שבה נמצא ה-Dockerfile
+          push: true
+          # ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+          # שני את 'noga171096@gmail.com' לשם המשתמש שלך!
+          tags: your-docker-username/my-k8s-app:v${{ github.run_number }}
+          # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
