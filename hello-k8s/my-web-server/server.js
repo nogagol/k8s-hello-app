@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   // השרת יגיד שלום ויציין את שם המחשב (הפוד) שהוא רץ עליו
-  res.end(`Hello GitOps - The Loop is Complete! im amazing!!! ${os.hostname()}\n`);
+  res.end(`Hello GitOps - The Loop is Complete! ${os.hostname()}\n`);
 });
 
 server.listen(port, () => {
