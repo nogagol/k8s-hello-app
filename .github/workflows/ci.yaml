@@ -3,9 +3,9 @@ name: CI Build and Push
 on:
   push:
     branches:
-      - master  # או main, תלוי איך קוראים לבראנץ' שלך
-    paths:
-      - 'hello-k8s/my-web-server/**' # ה-CI ירוץ רק אם נגענו בקוד של האפליקציה
+      - master
+      - main  # הוספתי גם main ליתר ביטחון
+  workflow_dispatch: # מאפשר להריץ ידנית בלחיצת כפתור
 
 jobs:
   build-and-push:
@@ -23,9 +23,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./hello-k8s/my-web-server # הנתיב לתיקייה שבה נמצא ה-Dockerfile
+          context: ./hello-k8s/my-web-server
           push: true
-          # ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-          # שני את 'noga171096@gmail.com' לשם המשתמש שלך!
           tags: noga171096@gmail.com/my-k8s-app:v${{ github.run_number }}
-          # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
