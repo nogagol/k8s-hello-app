@@ -1,15 +1,41 @@
+# Default values for hello-k8s.
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: "1.26"
-  pullPolicy: IfNotPresent
+  # 👇 שימי לב! כאן השם משתמש שלך
+  repository: nogagol/my-k8s-app
+  pullPolicy: Always
+  # 👇 כאן הגרסה שנוצרה ב-GitHub Actions (למשל v3)
+  tag: "v3"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 80
 
 ingress:
-  enabled: true
-  host: hello.local
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
 
+resources: {}
+autoscaling:
+  enabled: false
