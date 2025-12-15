@@ -25,4 +25,4 @@ jobs:
         with:
           context: ./hello-k8s/my-web-server
           push: true
-          tags: noga171096@gmail.com/my-k8s-app:v${{ github.run_number }}
+          tags: nogagol/my-k8s-app:v${{ github.run_number }}
