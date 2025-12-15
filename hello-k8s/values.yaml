@@ -6,7 +6,7 @@ image:
   repository: nogagol/my-k8s-app
   pullPolicy: Always
   # 👇 כאן הגרסה שנוצרה ב-GitHub Actions (למשל v3)
-  tag: "v8"
+  tag: "v9"
 
 imagePullSecrets: []
 nameOverride: ""
