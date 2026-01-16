@@ -12,7 +12,9 @@ spec:
       labels:
         app: my-web-server
     spec:
-      containers: # ודאי שיש כאן רווח נכון
+      imagePullSecrets:       # השורה הזו אומרת ל-K8s להשתמש במפתח
+      - name: aws-ecr-secret # זה השם המדויק של המפתח שיצרת ב-kubectl
+      containers:
       - name: my-web-server
         image: 746041018472.dkr.ecr.us-east-1.amazonaws.com/my-node-app:latest
         imagePullPolicy: Always
