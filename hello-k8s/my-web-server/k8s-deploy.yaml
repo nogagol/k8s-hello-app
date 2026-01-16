@@ -12,10 +12,10 @@ spec:
       labels:
         app: my-web-server
     spec:
-      containers:
+      containers: # ודאי שיש כאן רווח נכון
       - name: my-web-server
-        image: my-web-server:v1   # <--- הנה האימג' שלך!
-        imagePullPolicy: Never    # <--- חשוב מאוד: אומר לו "אל תחפש באינטרנט, תשתמש במה שטענתי לך ידנית"
+        image: 746041018472.dkr.ecr.us-east-1.amazonaws.com/my-node-app:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
 ---
