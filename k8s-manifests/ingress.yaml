@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: hello-k8s-service
 spec:
-  type: ClusterIP
+  type: LoadBalancer # זה השינוי שיגרום ל-AWS לתת לך כתובת חיצונית
   selector:
     app: hello-k8s
   ports:
